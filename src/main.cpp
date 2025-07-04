@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
+#include "draw.h"
 
 const int WIDTH = 800;
 const int HEIGHT = 600;
@@ -57,26 +58,10 @@ void handleEvents() {
 	}
 }
 
-void draw() {
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-	SDL_RenderClear(renderer);
-
-	SDL_Rect rect;
-	rect.x = 100;
-	rect.y = 100;
-	rect.w = 100;
-	rect.h = 100;
-
-	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-	SDL_RenderFillRect(renderer, &rect);
-
-	SDL_RenderPresent(renderer);
-}
-
 void loop() {
 	while (running) {
 		handleEvents();
-		draw();
+		draw(renderer);
 	}
 }
 
