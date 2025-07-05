@@ -8,8 +8,14 @@ class Planet {
 		// prędkość planety
 		float v_x;
 		float v_y;
+		// masa planety
+		float mass;
+		// gęstość planety
+		float density;
+		// promień planety 
+		float radius;
 		// konstruktor
-		Planet(float x, float y, float v_x, float v_y);
+		Planet(float _x, float _y, float _v_x, float _v_y, float _mass, float _density);
 		// funkcja aktualizująca położenie planety
 		void updatePos();
 };

@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include "draw.h"
 #include "planet.h"
+#include "handler.h"
+#include <vector>
 
 // wymiary okna
 const int WIDTH = 800;
@@ -44,6 +46,12 @@ void close() {
 	SDL_Quit();
 }
 
+// funkcja dodająca wszystkie planety itd.
+void setupEnvironment() {
+	planets.push_back(*(new Planet(100, 100, -1, 1, 1, 1)));
+	planets.push_back(*(new Planet(200, 100, 3, 1, 20, 1000)));
+}
+
 bool running = true;
 SDL_Event event;
 
@@ -58,7 +66,7 @@ void handleEvents() {
 			case SDL_KEYUP:
 				printf("Key up\n");
 				break;
-			// wyjście z okna - kliknięcie X
+				// wyjście z okna - kliknięcie X
 			case SDL_QUIT:
 				running = false;
 				printf("Quitting\n");
@@ -73,22 +81,20 @@ void handleEvents() {
 void loop() {
 	while (running) {
 		handleEvents();
-		// funkcja draw pochodzi z pliku draw.cpp
+		// funkcja updatePlanets() pochodzi z pliku handler.cpp
+		updatePlanets();
+		// funkcja draw() pochodzi z pliku draw.cpp
 		draw(renderer);
 	}
 }
 
 
 int main(int argc, char* argv[]) {
-	// test
-	Planet p(100, 100, 100, 100);
-	printf("%f\n", p.x);
-	p.updatePos();
-	printf("%f\n", p.x);
 	if (!init()) {
 		// zwróć błąd, jeśli nie udało się zainicjalizować SDL
 		return 1;
 	}
+	setupEnvironment();
 	loop();
 	close(); 
 	return 0;
