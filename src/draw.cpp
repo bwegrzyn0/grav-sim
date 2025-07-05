@@ -1,7 +1,6 @@
 #include <SDL2/SDL.h>
-#include <stdio.h>
 
-// https://gist.github.com/Gumichan01/332c26f6197a432db91cc4327fcabb1c
+// https://gist.github.com/Gumichan01/332c26f6197a432db91cc4327fcabb1c - wydajny algorytm do rasteryzacji kół i okręgów
 int SDL_RenderDrawCircle(SDL_Renderer* renderer, int x, int y, int radius) {
     int offsetx, offsety, d;
     int status;
@@ -89,9 +88,10 @@ int SDL_RenderFillCircle(SDL_Renderer * renderer, int x, int y, int radius) {
 }
 
 void draw(SDL_Renderer* renderer) {
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	// ustal kolor tła i je zapełń
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
-
+	
 	SDL_Rect rect;
 	rect.x = 100;
 	rect.y = 100;
@@ -103,6 +103,7 @@ void draw(SDL_Renderer* renderer) {
 	SDL_RenderDrawCircle(renderer, 300, 300, 100);
 	SDL_RenderFillCircle(renderer, 300, 500, 100);
 
+	// wyświetl to, co zostało narysowane 
 	SDL_RenderPresent(renderer);
 }
 
