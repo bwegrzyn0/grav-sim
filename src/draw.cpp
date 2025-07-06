@@ -1,5 +1,43 @@
 #include <SDL2/SDL.h>
 #include "handler.h"
+#include "draw.h"
+#include "main.h"
+
+int SDL_RenderDrawCircle(SDL_Renderer* renderer, int x, int y, int radius);
+int SDL_RenderFillCircle(SDL_Renderer * renderer, int x, int y, int radius);
+
+void draw(SDL_Renderer* renderer) {
+	// ustal kolor tła i je zapełń
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	SDL_RenderClear(renderer);
+
+	// renderujemy po kolei wszystkie planety
+	for (int i = 0; i < planets.size(); i++) {
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		SDL_RenderFillCircle(renderer, (int) planets.at(i).x - cam_x, (int) planets.at(i).y - cam_y, (int) (planets.at(i).radius * 100));
+	}
+
+	// wyświetl to, co zostało narysowane 
+	SDL_RenderPresent(renderer);
+}
+
+void updateCam() {
+	// ustawiamy prędkość kamery na postawie wciśniętych klawiszy
+	if (keysDown[0])
+		cam_vy = -cam_v;
+	else if (keysDown[1])
+		cam_vy = cam_v;
+	else 
+		cam_vy = 0;
+	if (keysDown[2])
+		cam_vx = cam_v;
+	else if (keysDown[3])
+		cam_vx = -cam_v;
+	else 
+		cam_vx = 0;
+	cam_x += cam_vx;
+	cam_y += cam_vy;
+}
 
 // https://gist.github.com/Gumichan01/332c26f6197a432db91cc4327fcabb1c - wydajny algorytm do rasteryzacji kół i okręgów
 int SDL_RenderDrawCircle(SDL_Renderer* renderer, int x, int y, int radius) {
@@ -86,20 +124,5 @@ int SDL_RenderFillCircle(SDL_Renderer * renderer, int x, int y, int radius) {
 	}
 
 	return status;
-}
-
-void draw(SDL_Renderer* renderer) {
-	// ustal kolor tła i je zapełń
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-	SDL_RenderClear(renderer);
-
-	// renderujemy po kolei wszystkie planety
-	for (int i = 0; i < planets.size(); i++) {
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-		SDL_RenderFillCircle(renderer, (int) planets.at(i).x, (int) planets.at(i).y, (int) (planets.at(i).radius * 100));
-	}
-
-	// wyświetl to, co zostało narysowane 
-	SDL_RenderPresent(renderer);
 }
 

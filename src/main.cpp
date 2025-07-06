@@ -4,6 +4,7 @@
 #include "planet.h"
 #include "handler.h"
 #include <vector>
+#include "main.h"
 
 // wymiary okna
 const int WIDTH = 800;
@@ -48,8 +49,9 @@ void close() {
 
 // funkcja dodająca wszystkie planety itd.
 void setupEnvironment() {
-	planets.push_back(*(new Planet(100, 100, 0, 3, 0.001, 1, 1)));
-	planets.push_back(*(new Planet(400, 300, 0, 0, 200, 1000, 2)));
+	planets.push_back(*(new Planet(200, 300, 0, 5.47, 0.001, 1, 1)));
+	planets.push_back(*(new Planet(595, 300, 0, -4, 30, 500, 1)));
+	planets.push_back(*(new Planet(400, 300, 0, 0.033, 200, 1000, 2)));
 }
 
 bool running = true;
@@ -61,10 +63,41 @@ void handleEvents() {
 		switch(event.type) {
 			// wciskanie klawiszy
 			case SDL_KEYDOWN:
-				printf("Key press\n");
+				// potem z tablicy keysDown korzysta updateCam() aby ustawiać prędkość kamery
+				switch (event.key.keysym.sym) {
+					case SDLK_UP:
+						keysDown[0] = true;
+						break;
+					case SDLK_DOWN:
+						keysDown[1] = true;
+						break;
+					case SDLK_RIGHT:
+						keysDown[2] = true;
+						break;
+					case SDLK_LEFT:
+						keysDown[3] = true;
+						break;
+					default:
+						break;
+				}
 				break;
 			case SDL_KEYUP:
-				printf("Key up\n");
+				switch (event.key.keysym.sym) {
+					case SDLK_UP:
+						keysDown[0] = false;
+						break;
+					case SDLK_DOWN:
+						keysDown[1] = false;
+						break;
+					case SDLK_RIGHT:
+						keysDown[2] = false;
+						break;
+					case SDLK_LEFT:
+						keysDown[3] = false;
+						break;
+					default:
+						break;
+				}
 				break;
 				// wyjście z okna - kliknięcie X
 			case SDL_QUIT:
@@ -83,7 +116,8 @@ void loop() {
 		handleEvents();
 		// funkcja updatePlanets() pochodzi z pliku handler.cpp
 		updatePlanets();
-		// funkcja draw() pochodzi z pliku draw.cpp
+		// funkcje draw() i updateCam() pochodzą z pliku draw.cpp
+		updateCam();
 		draw(renderer);
 	}
 }
