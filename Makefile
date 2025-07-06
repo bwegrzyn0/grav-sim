@@ -1,5 +1,5 @@
 CC = g++
-OBJS = src/main.cpp src/draw.cpp src/planet.cpp
+OBJS = src/*.cpp
 HEADERS = ./src/
 OBJ_NAME = run
 FLAGS = -w
