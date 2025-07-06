@@ -48,8 +48,8 @@ void close() {
 
 // funkcja dodająca wszystkie planety itd.
 void setupEnvironment() {
-	planets.push_back(*(new Planet(100, 100, 0, 8, 1, 100, 1)));
-	planets.push_back(*(new Planet(200, 100, 0, 0, 200, 1000, 2)));
+	planets.push_back(*(new Planet(100, 100, 0, 0.5, 0.001, 1, 1)));
+	planets.push_back(*(new Planet(400, 300, 0, 0, 200, 1000, 2)));
 }
 
 bool running = true;

@@ -50,7 +50,7 @@ void Planet::updatePos(std::vector<Planet> planets) {
 			float distance_squared = (x - planets.at(i).x)*(x - planets.at(i).x)+(y - planets.at(i).y)*(y - planets.at(i).y);
 //			printf("%f\n", distance_squared);
 			// obliczamy wartość przyspieszenia
-			float a = G*mass*planets.at(i).mass/distance_squared;
+			float a = G*planets.at(i).mass/distance_squared;
 			// obliczamy wartość sinusa i cosinusa kąta między planetami
 			float cos = (planets.at(i).x-x)/pow((double) distance_squared, 0.5d);
 			float sin = (planets.at(i).y-y)/pow((double) distance_squared, 0.5d);
