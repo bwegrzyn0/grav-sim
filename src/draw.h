@@ -1,12 +1,12 @@
 #ifndef DRAW_H
 #define DRAW_H
-// pozycja kamery
+// the camera's position
 inline float cam_x = 0;
 inline float cam_y = 0;
-// prędkość kamery
+// the camera's velocity
 inline float cam_vx = 0;
 inline float cam_vy = 0;
-// domyślna wartość prędkości kamery (może być zmieniana)
+// default value for the camera's velocity, it can be changed later by the user
 inline float cam_v = 0.2f;
 
 void draw(SDL_Renderer* renderer);

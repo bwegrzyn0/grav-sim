@@ -6,28 +6,27 @@
 #include <vector>
 #include "main.h"
 
-// wymiary okna
+// size of the window
 const int WIDTH = 800;
 const int HEIGHT = 600;
 
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 
-// funkcja odpowiadająca za inicjalizację SDL
 bool init() {
 	bool success = true;
-	// inicjalizuj SDL
+	// init SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		printf("Could not init SDL: %s\n", SDL_GetError());
 		success = false;
 	} else {
-		// utwórz okno
+		// create a window
 		window = SDL_CreateWindow("grav-sim", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
 		if (window == NULL) {
 			printf("Could not create window: %s\n", SDL_GetError());
 			success = false;
 		} else {
-			// stwórz renderer
+			// create a renderer
 			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 			if (renderer == NULL) {
 				printf("Could not create renderer: %s\n", SDL_GetError());
@@ -39,15 +38,13 @@ bool init() {
 	return success;
 }
 
-// funkcja odpowiadająca za "posprzątanie" po wszystkim
+// clean up	
 void close() {
-	// zniszcz okno, zwolnij miejsce w pamięci, zamknij SDL
 	SDL_DestroyWindow(window);
 	window = NULL;
 	SDL_Quit();
 }
 
-// funkcja dodająca wszystkie planety itd.
 void setupEnvironment() {
 	planets.push_back(*(new Planet(200, 300, 0, 5.47, 0.001, 1, 1)));
 	planets.push_back(*(new Planet(595, 300, 0, -4, 30, 500, 1)));
@@ -57,13 +54,11 @@ void setupEnvironment() {
 bool running = true;
 SDL_Event event;
 
-// funkcja sprawdzająca eventy
 void handleEvents() {
 	while(SDL_PollEvent(&event)) {
 		switch(event.type) {
-			// wciskanie klawiszy
 			case SDL_KEYDOWN:
-				// potem z tablicy keysDown korzysta updateCam() aby ustawiać prędkość kamery
+				// values stored in keysDown will be later used to set the camera's velocity
 				switch (event.key.keysym.sym) {
 					case SDLK_UP:
 						keysDown[0] = true;
@@ -99,8 +94,8 @@ void handleEvents() {
 						break;
 				}
 				break;
-				// wyjście z okna - kliknięcie X
 			case SDL_QUIT:
+				// this event happens when user clicks the "X" to close the window
 				running = false;
 				printf("Quitting\n");
 				break;
@@ -110,13 +105,10 @@ void handleEvents() {
 	}
 }
 
-// pętla programu
 void loop() {
 	while (running) {
 		handleEvents();
-		// funkcja updatePlanets() pochodzi z pliku handler.cpp
 		updatePlanets();
-		// funkcje draw() i updateCam() pochodzą z pliku draw.cpp
 		updateCam();
 		draw(renderer);
 	}
@@ -125,7 +117,6 @@ void loop() {
 
 int main(int argc, char* argv[]) {
 	if (!init()) {
-		// zwróć błąd, jeśli nie udało się zainicjalizować SDL
 		return 1;
 	}
 	setupEnvironment();

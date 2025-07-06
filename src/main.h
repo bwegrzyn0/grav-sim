@@ -1,9 +1,9 @@
 #ifndef MAIN_H
 #define MAIN_H
-const float dT = 0.01666666f; // krok czasowy
-const float G = 30.0f; // stała grawitacyjna
-// wciśnięcie klawiszy do sterowania kamerą
-// 0 - góra, 1 - dół, 2 - prawo, 3 - lewo
+const float dT = 0.01666666f; // time step
+const float G = 30.0f; // gravitational constant
+// store which keys are down in order to control the camera
+// 0 - up, 1 - down, 2 - right, 3 - left
 inline bool keysDown[] = {false, false, false, false};
 
 #endif

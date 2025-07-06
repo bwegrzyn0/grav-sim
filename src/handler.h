@@ -4,7 +4,7 @@
 #include <vector>
 #include "planet.h"
 
-// wektor z pointerami do planet
+// vector with all the planets
 inline std::vector<Planet> planets;
 
 void updatePlanets();
