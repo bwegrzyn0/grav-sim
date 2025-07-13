@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 Planet::Planet(float _x, float _y, float _v_x, float _v_y, float _mass, float _density, float _ID) {
+	// przyporządkowujemy zmienne lokalne przekazane do konstruktora zmiennym globalnym 		
 	x = _x;
 	y = _y;
 	v_x = _v_x;
@@ -14,7 +15,7 @@ Planet::Planet(float _x, float _y, float _v_x, float _v_y, float _mass, float _d
 	ID = _ID; 
 	a_x = 0;
 	a_y = 0;
-	// R = [3M/(4*PI*rho)]^(1/3) for a uniform sphere
+	// R = [3M/(4*PI*rho)]^(1/3) dla jednorodnej kuli
 	radius = pow((double) (3.0f*mass/(4.0f*3.1415f*density)), 0.333d);
 }
 

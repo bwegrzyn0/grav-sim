@@ -2,9 +2,10 @@
 #include "handler.h"
 #include <vector>
 
+// funkcja aktualizująca wszystkie planety
 void updatePlanets() {
-	// a for each loop won't cut it here
-	// it creates NEW objects of type Planet and updates THEIR positions
+	// pętla for each tutaj nie zadziała!
+	// tworzy ona NOWE obiekty Planet i zmienia ICH parametry pozostawiając obiekty w wektorze planets nienaruszonymi
 	for (int i = 0; i < planets.size(); i++) {
 		planets.at(i).updatePos(planets);	
 	}

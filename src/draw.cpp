@@ -7,22 +7,22 @@ int SDL_RenderDrawCircle(SDL_Renderer* renderer, int x, int y, int radius);
 int SDL_RenderFillCircle(SDL_Renderer * renderer, int x, int y, int radius);
 
 void draw(SDL_Renderer* renderer) {
-	// set the background color and fill it
+	// ustal kolor tła i je zapełń
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
 
-	// render each planet
+	// renderujemy po kolei wszystkie planety
 	for (int i = 0; i < planets.size(); i++) {
 		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		SDL_RenderFillCircle(renderer, (int) planets.at(i).x - cam_x, (int) planets.at(i).y - cam_y, (int) (planets.at(i).radius * 100));
 	}
 
-	// present what has been drawn to the screen
+	// wyświetl to, co zostało narysowane 
 	SDL_RenderPresent(renderer);
 }
 
 void updateCam() {
-	// set the camera's velocity according to the keys held down
+	// ustawiamy prędkość kamery na postawie wciśniętych klawiszy
 	if (keysDown[0])
 		cam_vy = -cam_v;
 	else if (keysDown[1])
@@ -39,7 +39,7 @@ void updateCam() {
 	cam_y += cam_vy;
 }
 
-// https://gist.github.com/Gumichan01/332c26f6197a432db91cc4327fcabb1c - an SDL2 implementation of the midpoint algorithm to rasterize circles
+// https://gist.github.com/Gumichan01/332c26f6197a432db91cc4327fcabb1c - wydajny algorytm do rasteryzacji kół i okręgów
 int SDL_RenderDrawCircle(SDL_Renderer* renderer, int x, int y, int radius) {
 	int offsetx, offsety, d;
 	int status;
