@@ -130,9 +130,9 @@ void loop() {
 		if (delta >= 1) {
 			// funkcja updatePlanets() pochodzi z pliku handler.cpp
 			// funkcje draw() i updateCam() pochodzą z pliku draw.cpp
-			updatePlanets();
-			updateCam();
-			delta--;
+			updatePlanets((float) delta);
+			updateCam((float) delta);
+			delta=0;
 			ticks++;
 		}
 

@@ -7,5 +7,5 @@
 // wektor z pointerami do planet
 inline std::vector<Planet> planets;
 
-void updatePlanets();
+void updatePlanets(float delta);
 #endif

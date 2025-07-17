@@ -25,6 +25,6 @@ class Planet {
 		// konstruktor
 		Planet(float _x, float _y, float _v_x, float _v_y, float _mass, float _density, float _ID);
 		// funkcja aktualizująca położenie planety
-		void updatePos(std::vector<Planet> planets);
+		void updatePos(std::vector<Planet> planets, float delta);
 };
 #endif

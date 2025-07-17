@@ -21,7 +21,7 @@ void draw(SDL_Renderer* renderer) {
 	SDL_RenderPresent(renderer);
 }
 
-void updateCam() {
+void updateCam(float delta) {
 	// ustawiamy prędkość kamery na postawie wciśniętych klawiszy
 	if (keysDown[0])
 		cam_vy = -cam_v;
@@ -36,8 +36,9 @@ void updateCam() {
 	else 
 		cam_vx = 0;
 	// aktualizujemy położenie kamery
-	cam_x += cam_vx;
-	cam_y += cam_vy;
+	// pomnożenie przez delta uniezależnia prędkość kamery od szybkości programu
+	cam_x += cam_vx * delta;
+	cam_y += cam_vy * delta;
 }
 
 // https://gist.github.com/Gumichan01/332c26f6197a432db91cc4327fcabb1c - wydajny algorytm do rasteryzacji kół i okręgów

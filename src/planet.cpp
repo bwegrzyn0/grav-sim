@@ -19,11 +19,12 @@ Planet::Planet(float _x, float _y, float _v_x, float _v_y, float _mass, float _d
 	radius = pow((double) (3.0f*mass/(4.0f*3.1415f*density)), 0.333d);
 }
 
-void Planet::updatePos(std::vector<Planet> planets) {
+void Planet::updatePos(std::vector<Planet> planets, float delta) {
 	// OBLICZANIE POŁOŻENIA
-	x += v_x * dT;
+	// pomnożenie przez delta uniezależnia od szybkości działania programu
+	x += v_x * dT * delta;
 	// dT to krok czasowy zdefiniowany w pliku main.h
-	y += v_y * dT;
+	y += v_y * dT * delta;
 
 	// OBLICZANIE PRĘDKOŚCI
 	// musimy zresetować przyspieszenie, aby obliczyć je na nowo

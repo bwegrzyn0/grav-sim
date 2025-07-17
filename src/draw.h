@@ -10,5 +10,5 @@ inline float cam_vy = 0;
 inline float cam_v = 5.0f;
 
 void draw(SDL_Renderer* renderer);
-void updateCam();
+void updateCam(float delta);
 #endif
