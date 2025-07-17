@@ -35,6 +35,7 @@ void updateCam() {
 		cam_vx = -cam_v;
 	else 
 		cam_vx = 0;
+	// aktualizujemy położenie kamery
 	cam_x += cam_vx;
 	cam_y += cam_vy;
 }

@@ -21,29 +21,14 @@ Planet::Planet(float _x, float _y, float _v_x, float _v_y, float _mass, float _d
 
 void Planet::updatePos(std::vector<Planet> planets) {
 	// OBLICZANIE POŁOŻENIA
-	// algorytm dla równania drugiego rzędu (równanie ruchu ciała w polu grawitacyjnym) został opisany w jednym z poprzednich artykułów:
-	// https://bwegrzyn0.github.io/programowanie/numeryczne-rozwi%C4%85zywanie-r%C3%B3wna%C5%84-r%C3%B3%C5%BCniczkowych-2-rz%C4%99du-metod%C4%85-rungego-kutty
-	// w tym przypadku x to czas, czyli t, y to x lub y, a y' to v_x lub v_y
-	// funkcja g(t, x, v_x) = v_x, czyli wielości k_1, k_2, itd. można obliczyć w następujący sposób (po podstawieniu do funkcji): 
-	float k_1x = v_x;
-	float k_2x = v_x + k_1x * dT / 2;
-	float k_3x = v_x + k_2x * dT / 2;
-	float k_4x = v_x + k_3x * dT;
-	x += dT / 6 * (k_1x + 2*k_2x + 2*k_3x + k_4x);
-	// prędkość będzie aktualizowana w oddzielnym miejscu, po aktualizacji położenia
+	x += v_x * dT;
 	// dT to krok czasowy zdefiniowany w pliku main.h
-
-	float k_1y = v_y;
-	float k_2y = v_y + k_1y * dT / 2;
-	float k_3y = v_y + k_2y * dT / 2;
-	float k_4y = v_y + k_3y * dT;
-	y += dT / 6 * (k_1y + 2*k_2y + 2*k_3y + k_4y);
+	y += v_y * dT;
 
 	// OBLICZANIE PRĘDKOŚCI
 	// musimy zresetować przyspieszenie, aby obliczyć je na nowo
 	a_x = 0;
 	a_y = 0;
-	// w pierwszej kolejności trzeba zsumować wkłady sił grawitacji od wszystkich planet
 	for (int i = 0; i < planets.size(); i++) {
 		if (planets.at(i).ID != ID) { // nie chcemy żeby planeta przyciągała sama siebie
 			// obliczamy r^2
@@ -59,19 +44,7 @@ void Planet::updatePos(std::vector<Planet> planets) {
 			a_y += a*sin;
 		}
 	}
-
-	// obliczamy prędkość za pomocą algorytmu Rungego-Kutty
-	// użyjemy jeszcze raz wcześniejszych zmiennych k
-	k_1x = a_x;
-	k_2x = a_x + k_1x * dT / 2;
-	k_3x = a_x + k_2x * dT / 2;
-	k_4x = a_x + k_3x * dT;
-	v_x += dT / 6 * (k_1x + 2*k_2x + 2*k_3x + k_4x);
-
-	k_1y = a_y;
-	k_2y = a_y + k_1y * dT / 2;
-	k_3y = a_y + k_2y * dT / 2;
-	k_4y = a_y + k_3y * dT;
-	v_y += dT / 6 * (k_1y + 2*k_2y + 2*k_3y + k_4y);
-
+	// aktualizujemy prędkość
+	v_x += a_x * dT;
+	v_y += a_y * dT;
 }

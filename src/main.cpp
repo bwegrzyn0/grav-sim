@@ -5,6 +5,7 @@
 #include "handler.h"
 #include <vector>
 #include "main.h"
+#include <chrono>
 
 // wymiary okna
 const int WIDTH = 800;
@@ -110,15 +111,45 @@ void handleEvents() {
 	}
 }
 
+double deltaTime = 1000000000.0d / (float) TPS;
+double delta = 0;
+int ticks = 0;
+
 // pętla programu
 void loop() {
+	auto lastTime = std::chrono::system_clock::now();
+	auto lastTimeTicks = std::chrono::system_clock::now();
 	while (running) {
+		auto now = std::chrono::system_clock::now();
+		auto duration = now - lastTime;
+		auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);	
+		float timeElapsed = ns.count();
+		delta = timeElapsed / deltaTime;
+
+		if (delta >= 1) {
+			// funkcja updatePlanets() pochodzi z pliku handler.cpp
+			// funkcje draw() i updateCam() pochodzą z pliku draw.cpp
+			updatePlanets();
+			updateCam();
+			lastTime = now;
+			delta--;
+			ticks++;
+		}
+
 		handleEvents();
-		// funkcja updatePlanets() pochodzi z pliku handler.cpp
-		updatePlanets();
-		// funkcje draw() i updateCam() pochodzą z pliku draw.cpp
-		updateCam();
 		draw(renderer);
+
+		// co sekundę wypisz szybkość programu w tickach na sekundę
+		auto nowTicks = std::chrono::system_clock::now();
+		auto durationTicks = nowTicks - lastTimeTicks;
+		auto nsTicks = std::chrono::duration_cast<std::chrono::nanoseconds>(durationTicks);	
+		float timeElapsedTicks = nsTicks.count();
+		if (timeElapsedTicks >= 1000000000) {
+			printf("TPS: %d\n", ticks);
+			ticks = 0;
+			lastTimeTicks = nowTicks;
+		}
+
 	}
 }
 

@@ -7,7 +7,7 @@ inline float cam_y = 0;
 inline float cam_vx = 0;
 inline float cam_vy = 0;
 // domyślna wartość prędkości kamery (może być zmieniana)
-inline float cam_v = 0.2f;
+inline float cam_v = 5.0f;
 
 void draw(SDL_Renderer* renderer);
 void updateCam();
