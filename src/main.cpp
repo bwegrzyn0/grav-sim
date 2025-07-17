@@ -124,14 +124,14 @@ void loop() {
 		auto duration = now - lastTime;
 		auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(duration);	
 		float timeElapsed = ns.count();
-		delta = timeElapsed / deltaTime;
+		delta += timeElapsed / deltaTime;
+		lastTime = now;
 
 		if (delta >= 1) {
 			// funkcja updatePlanets() pochodzi z pliku handler.cpp
 			// funkcje draw() i updateCam() pochodzą z pliku draw.cpp
 			updatePlanets();
 			updateCam();
-			lastTime = now;
 			delta--;
 			ticks++;
 		}
